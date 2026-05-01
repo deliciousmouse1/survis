@@ -1,119 +1,41 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Cross-View Geo-Localization 文献集</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #f0f2f5;
-            padding: 40px 20px;
-        }
-        .container { max-width: 1200px; margin: 0 auto; }
-        h1 {
-            color: #1a1a2e;
-            border-left: 5px solid #3498db;
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-        .subtitle { color: #666; margin-bottom: 30px; padding-left: 25px; }
-        .stats {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .stat { background: #e8f4fd; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; color: #2980b9; }
-        .paper {
-            background: white;
-            margin-bottom: 16px;
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #3498db;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-        }
-        .paper-title { font-size: 1.1rem; font-weight: 600; color: #2c3e50; margin-bottom: 8px; }
-        .paper-authors { font-size: 0.9rem; color: #555; margin-bottom: 6px; }
-        .paper-venue { font-size: 0.85rem; color: #7f8c8d; margin-bottom: 6px; }
-        .paper-year {
-            display: inline-block;
-            background: #e8f4fd;
-            padding: 2px 10px;
-            border-radius: 15px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #2980b9;
-            margin-right: 10px;
-        }
-        .paper-type { display: inline-block; padding: 2px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: 600; }
-        .type-method { background: #3498db; color: white; }
-        .type-benchmark { background: #27ae60; color: white; }
-        .type-survey { background: #e67e22; color: white; }
-        .paper-doi { font-size: 0.8rem; margin-top: 8px; }
-        .paper-doi a { color: #3498db; text-decoration: none; }
-        .paper-doi a:hover { text-decoration: underline; }
-        footer { text-align: center; margin-top: 40px; color: #999; font-size: 0.8rem; }
-    </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <script type="text/javascript" src="js/lib/bibtex_js.js"></script>
+    <script type="text/javascript" src="js/lib/FileSaver.js"></script>
+    <script type="text/javascript" src="js/lib/codemirror.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/lib/jquery.tooltipster.js"></script>
+    <script type="text/javascript" src="js/lib/figue.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/d3js/5.15.1/d3.min.js"></script>
+
+    <script type="text/javascript" src="data/generated/bib.js"></script>
+    <script type="text/javascript" src="data/generated/available_pdf.js"></script>
+    <script type="text/javascript" src="data/generated/available_img.js"></script>
+    <script type="text/javascript" src="data/search_stopwords.js"></script>
+    <script type="text/javascript" src="data/tag_categories.js"></script>
+    <script type="text/javascript" src="data/authorized_tags.js"></script>
+
+    <script type="text/javascript" src="properties.js"></script>
+    <script type="text/javascript" src="js/survis.js"></script>
+    <script type="text/javascript" src="js/util.js"></script>
+    <script type="text/javascript" src="js/warnings.js"></script>
+    <script type="text/javascript" src="js/bib.js"></script>
+    <script type="text/javascript" src="js/selectors.js"></script>
+    <script type="text/javascript" src="js/references.js"></script>
+    <script type="text/javascript" src="js/clustering.js"></script>
+    <script type="text/javascript" src="js/stats.js"></script>
+    <script type="text/javascript" src="js/tags.js"></script>
+    <script type="text/javascript" src="js/page.js"></script>
+    <script type="text/javascript" src="js/entry_layout.js"></script>
+    <script type="text/javascript" src="js/timeline.js"></script>
 </head>
+
 <body>
-<div class="container">
-    <h1>📚 Cross-View Geo-Localization 文献集</h1>
-    <div class="subtitle">无人机/卫星交叉视角地理定位 · 方法 · 基准数据集 · 综述</div>
-    <div id="stats" class="stats"></div>
-    <div id="papers-list"></div>
-    <footer>数据来源：公开文献 | 共 14 篇</footer>
-</div>
-<script>
-    const papers = [
-        { title: "MMHCA: Multi-feature representations based on multi-scale hierarchical contextual aggregation for UAV-view geo-localization", authors: "Chen, Nanhua; Lou, Tai-Shan; Zhao, Liangyu", year: "2024", venue: "Chinese Journal of Aeronautics", doi: "10.1016/j.cja.2024.09.018", type: "method" },
-        { title: "A Transformer-based feature segmentation and region alignment method for UAV-view geo-localization", authors: "Dai, Ming; Hu, Jian; Zhuang, Jiedong; Zheng, Enhui", year: "2022", venue: "IEEE Transactions on Circuits and Systems for Video Technology, 32(7), 4376-4389", doi: "10.1109/TCSVT.2021.3135013", type: "method" },
-        { title: "Sample4Geo: Hard negative sampling for cross-view geo-localisation", authors: "Deuser, Fabian; Habel, Konrad; Oswald, Norbert", year: "2023", venue: "Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV), pp. 16847-16856", doi: "10.1109/ICCV51070.2023.01545", type: "method" },
-        { title: "Cross-view geo-localization: A survey", authors: "Durgam, Abhilash; Paheding, Sidike; Dhiman, Vikas; Devabhaktuni, Vijay", year: "2024", venue: "arXiv preprint", doi: "10.48550/arXiv.2406.09722", type: "survey" },
-        { title: "Multibranch joint representation learning based on information fusion strategy for cross-view geo-localization", authors: "Ge, Fawei; Zhang, Yunzhou; Liu, Yixiu; Wang, Guiyuan; Coleman, Sonya; Kerr, Dermot; Wang, Lipo", year: "2024", venue: "IEEE Transactions on Geoscience and Remote Sensing, 62, 1-16", doi: "10.1109/TGRS.2024.3378453", type: "method" },
-        { title: "A satellite-drone image cross-view geolocalization method based on multi-scale information and dual-channel attention mechanism", authors: "Gong, Naigun; Li, Liwei; Sha, J.; Sun, Xu; Huang, Qian", year: "2024", venue: "Remote Sensing, 16(6), 941", doi: "10.3390/rs16060941", type: "method" },
-        { title: "A contrastive learning based multiview scene matching method for UAV view geo-localization", authors: "He, Qiyi; Xu, Ao; Zhang, Yifan; Ye, Zhiwei; Zhou, Wen; Xi, Ruijie; Lin, Qiao", year: "2024", venue: "Remote Sensing, 16(16), 3039", doi: "10.3390/rs16163039", type: "method" },
-        { title: "GeoFormer: An effective Transformer-based Siamese network for UAV geolocalization", authors: "Li, Qingge; Yang, Xiaogang; Fan, Jiwei; Lu, Ruitao; Tang, Bin; Wang, Shanshan; Su, Shiliang", year: "2024", venue: "IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing, 17, 9470-9491", doi: "10.1109/JSTARS.2024.3392812", type: "method" },
-        { title: "Joint representation learning and keypoint detection for cross-view geo-localization", authors: "Lin, Jinliang; Zheng, Zhedong; Zhong, Zhun; Luo, Zhiming; Li, Shaozi; Yang, Yi; Sebe, Nicu", year: "2022", venue: "IEEE Transactions on Image Processing, 31, 3780-3792", doi: "10.1109/TIP.2022.3175601", type: "method" },
-        { title: "Each part matters: Local patterns facilitate cross-view geo-localization", authors: "Wang, Tingyu; Zheng, Zhedong; Yan, Chenggang; Zhang, Jiyong; Sun, Yaoqi; Zheng, Bolun; Yang, Yi", year: "2022", venue: "IEEE Transactions on Circuits and Systems for Video Technology, 32(2), 867-879", doi: "10.1109/TCSVT.2021.3061265", type: "method" },
-        { title: "CAMP: A cross-view geo-localization method using contrastive attributes mining and position-aware partitioning", authors: "Wu, Qiong; Wan, Y.; Zheng, Zhi; Zhang, Yongjun; Wang, G.; Zhao, Z.", year: "2024", venue: "IEEE Transactions on Geoscience and Remote Sensing, 62, 1-14", doi: "10.1109/TGRS.2024.3448499", type: "method" },
-        { title: "TransFG: A cross-view geo-localization of satellite and UAVs imagery pipeline using Transformer-based feature aggregation and gradient guidance", authors: "Zhao, Hu; Ren, Keyan; Yue, Tianyi; Zhang, Chun; Yuan, Shuaidon", year: "2024", venue: "IEEE Transactions on Geoscience and Remote Sensing, 62, 1-12", doi: "10.1109/TGRS.2024.3352418", type: "method" },
-        { title: "University-1652: A multi-view multi-source benchmark for drone-based geo-localization", authors: "Zheng, Zhedong; Wei, Yunchao; Yang, Yi", year: "2020", venue: "Proceedings of the 28th ACM International Conference on Multimedia, pp. 1395-1403", doi: "10.1145/3394171.3413896", type: "benchmark" },
-        { title: "SUES-200: A multi-height multi-scene cross-view image benchmark across drone and satellite", authors: "Zhu, Runzhe; Yang, Mingze; Wu, Fei; Yang, Yuncheng; Hu, W.", year: "2023", venue: "IEEE Transactions on Circuits and Systems for Video Technology, 33(9), 4825-4839", doi: "10.1109/TCSVT.2023.3249204", type: "benchmark" }
-    ];
-
-    const methodCount = papers.filter(p => p.type === 'method').length;
-    const benchmarkCount = papers.filter(p => p.type === 'benchmark').length;
-    const surveyCount = papers.filter(p => p.type === 'survey').length;
-
-    document.getElementById('stats').innerHTML = `
-        <span class="stat">📄 方法: ${methodCount} 篇</span>
-        <span class="stat">📊 基准数据集: ${benchmarkCount} 个</span>
-        <span class="stat">📖 综述: ${surveyCount} 篇</span>
-        <span class="stat">📅 年份范围: 2020-2024</span>
-    `;
-
-    const container = document.getElementById('papers-list');
-    papers.forEach(paper => {
-        const div = document.createElement('div');
-        div.className = 'paper';
-        const typeClass = paper.type === 'method' ? 'type-method' : (paper.type === 'benchmark' ? 'type-benchmark' : 'type-survey');
-        const typeName = paper.type === 'method' ? '方法' : (paper.type === 'benchmark' ? '基准数据集' : '综述');
-        div.innerHTML = `
-            <div class="paper-title">${paper.title}</div>
-            <div class="paper-authors">✍️ ${paper.authors}</div>
-            <div class="paper-venue">📖 ${paper.venue}</div>
-            <div>
-                <span class="paper-year">📅 ${paper.year}</span>
-                <span class="paper-type ${typeClass}">${typeName}</span>
-            </div>
-            <div class="paper-doi">🔗 <a href="https://doi.org/${paper.doi}" target="_blank">https://doi.org/${paper.doi}</a></div>
-        `;
-        container.appendChild(div);
-    });
-</script>
 </body>
+
 </html>
