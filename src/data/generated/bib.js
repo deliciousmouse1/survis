@@ -143,15 +143,16 @@ const generatedBibEntries = {
   "doi": "10.1109/TCSVT.2023.3249204",
   "keywords": "type:benchmark, application:drone-satellite-cross-view"
 },
+
 "Durgam2024Survey": {
-    "title": "Cross-view geo-localization: A survey",
-    "author": "Durgam, Abhilash and Paheding, Sidike and Dhiman, Vikas and Devabhaktuni, Vijay",
-    "year": "2024",
-    "journal": "IEEE Access",
-    "volume": "12",
-    "pages": "192028--192050",
-    "doi": "10.1109/ACCESS.2024.3476946",
-    "keywords": "type:survey, application:cross-view-geo-localization"
+  "title": "Cross-view geo-localization: A survey",
+  "author": "Durgam, Abhilash and Paheding, Sidike and Dhiman, Vikas and Devabhaktuni, Vijay",
+  "year": "2024",
+  "journal": "IEEE Access",
+  "volume": "12",
+  "pages": "192028--192050",
+  "doi": "10.1109/ACCESS.2024.3476946",
+  "keywords": "type:survey, application:cross-view-geo-localization"
 }
 
-}});
+};
