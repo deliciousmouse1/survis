@@ -153,4 +153,5 @@ const generatedBibEntries = {
     "doi": "10.1109/ACCESS.2024.3476946",
     "keywords": "type:survey, application:cross-view-geo-localization"
 }
+
 }});
