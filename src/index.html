@@ -1,41 +1,175 @@
-<html>
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-    <script type="text/javascript" src="js/lib/bibtex_js.js"></script>
-    <script type="text/javascript" src="js/lib/FileSaver.js"></script>
-    <script type="text/javascript" src="js/lib/codemirror.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <meta charset="UTF-8">
+    <title>SurVis - Cross-View Geo-Localization</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="js/lib/jquery.tooltipster.js"></script>
-    <script type="text/javascript" src="js/lib/figue.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/d3js/5.15.1/d3.min.js"></script>
-
-    <script type="text/javascript" src="data/bib.js"></script>
-    <script type="text/javascript" src="data/generated/available_pdf.js"></script>
-    <script type="text/javascript" src="data/generated/available_img.js"></script>
-    <script type="text/javascript" src="data/search_stopwords.js"></script>
-    <script type="text/javascript" src="data/tag_categories.js"></script>
-    <script type="text/javascript" src="data/authorized_tags.js"></script>
-
-    <script type="text/javascript" src="properties.js"></script>
-    <script type="text/javascript" src="js/survis.js"></script>
-    <script type="text/javascript" src="js/util.js"></script>
-    <script type="text/javascript" src="js/warnings.js"></script>
-    <script type="text/javascript" src="js/bib.js"></script>
-    <script type="text/javascript" src="js/selectors.js"></script>
-    <script type="text/javascript" src="js/references.js"></script>
-    <script type="text/javascript" src="js/clustering.js"></script>
-    <script type="text/javascript" src="js/stats.js"></script>
-    <script type="text/javascript" src="js/tags.js"></script>
-    <script type="text/javascript" src="js/page.js"></script>
-    <script type="text/javascript" src="js/entry_layout.js"></script>
-    <script type="text/javascript" src="js/timeline.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
+    <script src="js/survis.js"></script>
+    <script src="js/util.js"></script>
+    <script src="js/selectors.js"></script>
+    <script src="js/references.js"></script>
+    <script src="js/clustering.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="js/tags.js"></script>
+    <script src="js/page.js"></script>
+    <script src="js/entry_layout.js"></script>
+    <script src="js/timeline.js"></script>
 </head>
-
 <body>
+<div id="page-container"></div>
+<script>
+$(document).ready(function() {
+    survis.init({
+        datasets: [{
+            name: "main",
+            publications: [
+                {
+                    "title": "MMHCA: Multi-feature representations based on multi-scale hierarchical contextual aggregation for UAV-view geo-localization",
+                    "author": "Chen, Nanhua and Lou, Tai-Shan and Zhao, Liangyu",
+                    "year": "2024",
+                    "journal": "Chinese Journal of Aeronautics",
+                    "doi": "10.1016/j.cja.2024.09.018",
+                    "keywords": "type:method, application:UAV-view-geo-localization"
+                },
+                {
+                    "title": "A Transformer-based feature segmentation and region alignment method for UAV-view geo-localization",
+                    "author": "Dai, Ming and Hu, Jian and Zhuang, Jiedong and Zheng, Enhui",
+                    "year": "2022",
+                    "journal": "IEEE Transactions on Circuits and Systems for Video Technology",
+                    "volume": "32",
+                    "number": "7",
+                    "pages": "4376--4389",
+                    "doi": "10.1109/TCSVT.2021.3135013",
+                    "keywords": "type:method, application:UAV-view-geo-localization"
+                },
+                {
+                    "title": "Sample4Geo: Hard negative sampling for cross-view geo-localisation",
+                    "author": "Deuser, Fabian and Habel, Konrad and Oswald, Norbert",
+                    "year": "2023",
+                    "booktitle": "Proceedings of the IEEE/CVF International Conference on Computer Vision",
+                    "pages": "16847--16856",
+                    "doi": "10.1109/ICCV51070.2023.01545",
+                    "keywords": "type:method, application:cross-view-geo-localisation"
+                },
+                {
+                    "title": "Cross-view geo-localization: A survey",
+                    "author": "Durgam, Abhilash and Paheding, Sidike and Dhiman, Vikas and Devabhaktuni, Vijay",
+                    "year": "2024",
+                    "journal": "arXiv preprint",
+                    "doi": "10.48550/arXiv.2406.09722",
+                    "keywords": "type:survey, application:cross-view-geo-localization"
+                },
+                {
+                    "title": "Multibranch joint representation learning based on information fusion strategy for cross-view geo-localization",
+                    "author": "Ge, Fawei and Zhang, Yunzhou and Liu, Yixiu and Wang, Guiyuan and Coleman, Sonya and Kerr, Dermot and Wang, Lipo",
+                    "year": "2024",
+                    "journal": "IEEE Transactions on Geoscience and Remote Sensing",
+                    "volume": "62",
+                    "pages": "1--16",
+                    "doi": "10.1109/TGRS.2024.3378453",
+                    "keywords": "type:method, application:cross-view-geo-localization"
+                },
+                {
+                    "title": "A satellite-drone image cross-view geolocalization method based on multi-scale information and dual-channel attention mechanism",
+                    "author": "Gong, Naigun and Li, Liwei and Sha, J. and Sun, Xu and Huang, Qian",
+                    "year": "2024",
+                    "journal": "Remote Sensing",
+                    "volume": "16",
+                    "number": "6",
+                    "pages": "941",
+                    "doi": "10.3390/rs16060941",
+                    "keywords": "type:method, application:satellite-drone-geolocalization"
+                },
+                {
+                    "title": "A contrastive learning based multiview scene matching method for UAV view geo-localization",
+                    "author": "He, Qiyi and Xu, Ao and Zhang, Yifan and Ye, Zhiwei and Zhou, Wen and Xi, Ruijie and Lin, Qiao",
+                    "year": "2024",
+                    "journal": "Remote Sensing",
+                    "volume": "16",
+                    "number": "16",
+                    "pages": "3039",
+                    "doi": "10.3390/rs16163039",
+                    "keywords": "type:method, application:UAV-view-geo-localization"
+                },
+                {
+                    "title": "GeoFormer: An effective Transformer-based Siamese network for UAV geolocalization",
+                    "author": "Li, Qingge and Yang, Xiaogang and Fan, Jiwei and Lu, Ruitao and Tang, Bin and Wang, Shanshan and Su, Shiliang",
+                    "year": "2024",
+                    "journal": "IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing",
+                    "volume": "17",
+                    "pages": "9470--9491",
+                    "doi": "10.1109/JSTARS.2024.3392812",
+                    "keywords": "type:method, application:UAV-geolocalization"
+                },
+                {
+                    "title": "Joint representation learning and keypoint detection for cross-view geo-localization",
+                    "author": "Lin, Jinliang and Zheng, Zhedong and Zhong, Zhun and Luo, Zhiming and Li, Shaozi and Yang, Yi and Sebe, Nicu",
+                    "year": "2022",
+                    "journal": "IEEE Transactions on Image Processing",
+                    "volume": "31",
+                    "pages": "3780--3792",
+                    "doi": "10.1109/TIP.2022.3175601",
+                    "keywords": "type:method, application:cross-view-geo-localization"
+                },
+                {
+                    "title": "Each part matters: Local patterns facilitate cross-view geo-localization",
+                    "author": "Wang, Tingyu and Zheng, Zhedong and Yan, Chenggang and Zhang, Jiyong and Sun, Yaoqi and Zheng, Bolun and Yang, Yi",
+                    "year": "2022",
+                    "journal": "IEEE Transactions on Circuits and Systems for Video Technology",
+                    "volume": "32",
+                    "number": "2",
+                    "pages": "867--879",
+                    "doi": "10.1109/TCSVT.2021.3061265",
+                    "keywords": "type:method, application:cross-view-geo-localization"
+                },
+                {
+                    "title": "CAMP: A cross-view geo-localization method using contrastive attributes mining and position-aware partitioning",
+                    "author": "Wu, Qiong and Wan, Y. and Zheng, Zhi and Zhang, Yongjun and Wang, G. and Zhao, Z.",
+                    "year": "2024",
+                    "journal": "IEEE Transactions on Geoscience and Remote Sensing",
+                    "volume": "62",
+                    "pages": "1--14",
+                    "doi": "10.1109/TGRS.2024.3448499",
+                    "keywords": "type:method, application:cross-view-geo-localization"
+                },
+                {
+                    "title": "TransFG: A cross-view geo-localization of satellite and UAVs imagery pipeline using Transformer-based feature aggregation and gradient guidance",
+                    "author": "Zhao, Hu and Ren, Keyan and Yue, Tianyi and Zhang, Chun and Yuan, Shuaidon",
+                    "year": "2024",
+                    "journal": "IEEE Transactions on Geoscience and Remote Sensing",
+                    "volume": "62",
+                    "pages": "1--12",
+                    "doi": "10.1109/TGRS.2024.3352418",
+                    "keywords": "type:method, application:satellite-UAV-cross-view-geo-localization"
+                },
+                {
+                    "title": "University-1652: A multi-view multi-source benchmark for drone-based geo-localization",
+                    "author": "Zheng, Zhedong and Wei, Yunchao and Yang, Yi",
+                    "year": "2020",
+                    "booktitle": "Proceedings of the 28th ACM International Conference on Multimedia",
+                    "pages": "1395--1403",
+                    "doi": "10.1145/3394171.3413896",
+                    "keywords": "type:benchmark, application:drone-based-geo-localization"
+                },
+                {
+                    "title": "SUES-200: A multi-height multi-scene cross-view image benchmark across drone and satellite",
+                    "author": "Zhu, Runzhe and Yang, Mingze and Wu, Fei and Yang, Yuncheng and Hu, W.",
+                    "year": "2023",
+                    "journal": "IEEE Transactions on Circuits and Systems for Video Technology",
+                    "volume": "33",
+                    "number": "9",
+                    "pages": "4825--4839",
+                    "doi": "10.1109/TCSVT.2023.3249204",
+                    "keywords": "type:benchmark, application:drone-satellite-cross-view"
+                }
+            ]
+        }]
+    });
+});
+</script>
 </body>
-
 </html>
