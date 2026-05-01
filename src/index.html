@@ -34,8 +34,33 @@
     <script type="text/javascript" src="js/entry_layout.js"></script>
     <script type="text/javascript" src="js/timeline.js"></script>
 </head>
-
 <body>
+<div id="page-container"></div>
+<script>
+    // 等待 SurVis 加载完成后，手动注入数据
+    $(document).ready(function() {
+        // 等待 survis 对象可用
+        function waitForSurvis() {
+            if (typeof survis !== 'undefined' && survis.datasets && survis.datasets[0]) {
+                // 把 generatedBibEntries 转换成 SurVis 需要的 publications 数组
+                var publications = [];
+                for (var key in generatedBibEntries) {
+                    if (generatedBibEntries.hasOwnProperty(key)) {
+                        var entry = generatedBibEntries[key];
+                        entry.key = key;
+                        publications.push(entry);
+                    }
+                }
+                // 替换 SurVis 的数据
+                survis.datasets[0].publications = publications;
+                // 刷新页面显示
+                survis.update();
+            } else {
+                setTimeout(waitForSurvis, 100);
+            }
+        }
+        waitForSurvis();
+    });
+</script>    
 </body>
-
 </html>
